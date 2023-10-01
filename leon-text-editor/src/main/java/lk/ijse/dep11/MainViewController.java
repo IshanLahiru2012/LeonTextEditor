@@ -5,10 +5,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.web.HTMLEditor;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import netscape.javascript.JSObject;
 
 import java.io.*;
 import java.util.Optional;
@@ -194,9 +199,15 @@ public class MainViewController {
     }
 
     public void MenuItemExitOnAction(ActionEvent actionEvent) {
+        Stage stage = (Stage) root.getScene().getWindow();
+        stage.close();
     }
 
+    protected String textStor="";
     public void MenuItemCutOnACtion(ActionEvent actionEvent) {
+        System.out.println("cut");
+        
+
     }
 
     public void MenuItemCopyOnAction(ActionEvent actionEvent) {
