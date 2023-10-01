@@ -72,7 +72,7 @@ public class MainViewController {
         }
         File[] files = dircory.listFiles();
         for (File file1 : files) {
-            if(file1.getName().startsWith("LTEditor-")){
+            if((file1.getName().contains(".txt")|| file1.getName().contains(".html")) && file1.getName().startsWith("LTEditor-")){
                 int check = Integer.parseInt(file1.getName().substring(9,file1.getName().indexOf(".")));
                 if(check >fileIndex){
                     fileIndex=check;
@@ -140,7 +140,8 @@ public class MainViewController {
         File[] files = fileList.listFiles();
         String fileFormat= ".html";
         for (File file : files) {
-            if(file.getName().substring(0,file.getName().indexOf('.')).equals(stage.getTitle())){
+            if((file.getName().contains(".txt")|| file.getName().contains(".html")) &&
+                    file.getName().substring(0,file.getName().indexOf('.')).equals(stage.getTitle())){
                 fileFormat= file.getName().substring(file.getName().indexOf('.'));
                 break;
             }
@@ -166,7 +167,27 @@ public class MainViewController {
     }
 
     public void MenuItemSaveAsOnAction(ActionEvent actionEvent) {
-        
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save as Text File");
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Text File (*.txt)","*.txt"),
+                new FileChooser.ExtensionFilter("HTML File (*.HTML,*.html)","*.html"));
+        File initialDirectory = new File(String.format("/home/%s/Documents/Leon_Text_Editor", System.getProperty("user.name")));
+
+        if(!initialDirectory.exists())initialDirectory.mkdirs();
+        fileChooser.setInitialDirectory(initialDirectory);
+        fileChooser.setInitialFileName(getFileName());
+
+        File file = fileChooser.showSaveDialog(root.getScene().getWindow());
+        if(file == null)return;
+        String selectedFormat = fileChooser.getSelectedExtensionFilter().getExtensions().get(0).substring(1);
+        File file1 = new File(file.getAbsolutePath() + selectedFormat);
+
+        try(FileWriter fileWriter = new FileWriter(file1);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)){
+            bufferedWriter.write(HTMLEditor.getHtmlText());
+        } catch (IOException e) {
+            System.out.println("unable to save file");;
+        }
     }
 
     public void MenuItemPrintOnAction(ActionEvent actionEvent) {
