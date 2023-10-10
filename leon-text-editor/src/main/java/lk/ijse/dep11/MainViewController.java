@@ -4,17 +4,14 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.web.HTMLEditor;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import netscape.javascript.JSObject;
-
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import java.io.*;
 import java.util.Optional;
 
@@ -162,6 +159,10 @@ public class MainViewController {
         }
         try(FileWriter fwr = new FileWriter(file);
             BufferedWriter bwr = new BufferedWriter(fwr)) {
+
+//            Document document = Jsoup.parse(HTMLEditor.getHtmlText());
+//            String textContent = document.text();
+//            bwr.write(textContent);
             bwr.write(HTMLEditor.getHtmlText());
 
         }catch (FileNotFoundException e){
@@ -185,7 +186,9 @@ public class MainViewController {
         File file = fileChooser.showSaveDialog(root.getScene().getWindow());
         if(file == null)return;
         String selectedFormat = fileChooser.getSelectedExtensionFilter().getExtensions().get(0).substring(1);
+        selectedFormat = file.getAbsolutePath().endsWith(selectedFormat) ? "" : selectedFormat;
         File file1 = new File(file.getAbsolutePath() + selectedFormat);
+
 
         try(FileWriter fileWriter = new FileWriter(file1);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)){
