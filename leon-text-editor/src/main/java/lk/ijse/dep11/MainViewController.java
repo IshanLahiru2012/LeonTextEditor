@@ -14,8 +14,6 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
 import java.io.*;
 import java.util.Optional;
@@ -41,6 +39,7 @@ public class MainViewController {
 
     }
     public void initData(int index){
+
         fileIndex=index;
     }
 
@@ -148,8 +147,8 @@ public class MainViewController {
         String fileFormat= ".html";
         for (File file : files) {
             if((file.getName().contains(".txt")|| file.getName().contains(".html")) &&
-                    file.getName().substring(0,file.getName().indexOf('.')).equals(stage.getTitle())){
-                fileFormat= file.getName().substring(file.getName().indexOf('.'));
+                    file.getName().substring(0,file.getName().lastIndexOf('.')).equals(stage.getTitle())){
+                fileFormat= file.getName().substring(file.getName().lastIndexOf('.'));
                 break;
             }
         }
@@ -225,19 +224,17 @@ public class MainViewController {
         WebEngine webEngine = ((WebView)HTMLEditor.lookup(".web-view")).getEngine();
         // Get the selected text using JavaScript
         String selectedText = (String) webEngine.executeScript("window.getSelection().toString()");
-        
+
         // Copy the selected text to the clipboard
         Clipboard clipboard = Clipboard.getSystemClipboard();
         ClipboardContent content = new ClipboardContent();
         content.putString(selectedText);
         clipboard.setContent(content);
+        System.out.println(selectedText);
 
     }
     public void MenuItemPasteOnAction(ActionEvent actionEvent) {
-
-
-
-
+        
     }
 
     public void MenuItemSelectAllOnAction(ActionEvent actionEvent) {

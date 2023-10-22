@@ -1,19 +1,13 @@
 package lk.ijse.dep11;
 
-import javafx.animation.FadeTransition;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.Duration;
-
-import java.io.IOException;
 
 public class AppInitializer extends Application {
 
@@ -35,6 +29,7 @@ public class AppInitializer extends Application {
         mainScene.setFill(Color.TRANSPARENT);
         primaryStage.centerOnScreen();
         primaryStage.show();
+
 
     }
 }
